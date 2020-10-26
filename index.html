@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js</title>
+
+    <style>
+        .big{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quis nisi quo, et maxime est necessitatibus dignissimos repudiandae? Harum voluptate placeat unde voluptatum earum incidunt necessitatibus dolor soluta labore minima.</h2>
+
+    <ul></ul>
+
+    <ul class="items">
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+    </ul>
+
+    <ul class="data-items">
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+    </ul>
+
+    <ul class="exceed-li-items">
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+        <li>This is an item</li>
+    </ul>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script>
+        heros = ["Hulk", "Captain America", "Superman", "Dr. Strange"];
+        numbers = [14, 20, 26, 30, 38];
+        numArray = [12, 26, 39, 48, 40, 50, 78, 90, 37, 78];
+
+        d3.select("h2")
+        .style("font-size", "20px");
+
+        d3.select("ul")
+        .selectAll("li")
+        .data(heros)
+        .enter()
+        .append("li")
+        .text(hero => hero);
+
+        // select items and apply css, change inner html and add class
+        d3.select("ul.items")
+        .selectAll("li:nth-child(even)")
+        .style("color", "red")
+        .html("This is an even number")
+        .classed("big", true);
+
+        //can render array in html and change style
+        d3.selectAll(".data-items li")
+        .data(numbers)
+        .style("font-size", function(d){
+            return d+"px"
+        });
+
+        // If number of items in an array is greater than the li existed in DOM then we can create new li for extra array items
+        var li = d3.select("body")
+        .selectAll('.exceed-li-items li')
+        .data(numArray)
+        .text(function(d){
+            return "This is a number " +d
+        })
+
+        li.enter().append("li")
+        .text(function(d){
+            return "This is a number " +d
+        })
+
+        li.exit().remove();
+    </script>
+</body>
+</html>

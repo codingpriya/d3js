@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Chart</title>
+</head>
+<body>
+    
+    <div id="example"></div>
+    
+    <div id="pieContainer">
+        <div id="pieInfo"></div>
+    </div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+    <script>
+        const arbitraryData = [
+            { name: 'Ireland', income: 53000, life: 78, pop: 6378, color: 'green' },
+            { name: 'Norway', income: 73000, life: 87, pop: 5084, color: 'blue' },
+            { name: 'Tanzania', income: 27000, life: 45, pop: 3407, color: 'pink' },
+            { name: 'Mexico', income: 36000, life: 65, pop: 2000, color: 'yellow' },
+            { name: 'India', income: 20000, life: 59, pop: 10000, color: 'red' },
+            { name: 'France', income: 10000, life: 95, pop: 8000, color: 'purple' }
+        ];
+
+        // Create SVG - a container to hold our visualization
+        const svg = d3.select("#example").append("svg") // select element by ID and append svg
+                .attr("width", 500) // set container attributes
+                .attr("height", 500)
+                .style("background-color", "#666666")
+
+        svg.selectAll("circle") // create virtual circle template
+            .data(arbitraryData) // bind data
+        .enter() // for each row in data...
+            .append("circle") // bind circle & data row such that...
+                .attr("id", function(d){ return d.name; }) // set the circle's id according to the country name
+                .attr("cx", function(d){ return d.income / 200; }) //set the circle's horizontal position according to income
+                .attr("cy", function(d){ return d.life * 3; }) //set the circle's vertical position according to life expectancy
+                .attr("r", function(d){ return d.pop / 1000 * 3; }) //set the circle's radius according to country's population
+                .attr("fill", function(d){ return d.color; }) //set the circle's color according to country's color
+            .append("svg:title") // add a tooltip that displays the country name
+                .text(function(d){ return 'Country: ' + d.name; });
+    </script>
+</body>
+</html>

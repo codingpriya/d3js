@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Example</title>
+</head>
+<body>    
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+    <script>
+
+        // simple creation of svg and rectangle in chart
+        /*
+        let data = [1, 2, 3, 4, 5];
+        let scale = d3.scaleLinear()
+            .domain([1, 5]) // data space
+            .range([0, 200]); // pixel space
+
+        let svg = d3.select("body").append("svg")
+            .attr("width", 250)
+            .attr("height", 250);
+
+        svg.selectAll("rect")
+            .data(data)
+        .enter().append("rect")
+            .attr("x", function(d){ return scale(d); })
+            .attr("y", 50)
+            .attr("width", 20)
+            .attr("height", 20);
+        */
+
+        // to change color of each rectangle using a function
+
+        let scale = d3.scaleLinear()
+            .domain([1, 5]) // data space
+            .range([0, 200]); // pixel space
+
+        let svg = d3.select("body").append("svg")
+            .attr("width", 250)
+            .attr("height", 250);
+
+        function render(data, color){
+            const rects = svg.selectAll("rect").data(data);
+            rects.enter().append("rect") // enter only handles when new data added
+                .attr("x", function(d){ return scale(d); })
+                .attr("y", 50)
+                .attr("width", 20)
+                .attr("height", 20)
+                .attr("fill", color);
+        }
+
+        // render([1, 2, 3], "red");
+        // render([1, 2, 3, 4, 5], "blue"); // it will only check new added data and update accordingly
+
+        render([1, 2, 2.5], "skyblue");
+        render([1, 2, 3, 4, 5], "green"); // if we take float value, it will only check non-fraction values
+    </script>
+</body>
+</html>
